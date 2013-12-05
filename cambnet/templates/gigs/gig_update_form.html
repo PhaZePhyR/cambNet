@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="{% url 'gigs:index' %}" method="get"><input type="submit" value="Home"/></form>
+
+	<form action="{% url 'gigs:update' gig.id %}" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Update"/>
+	</form>
+	
+	<form action="{% url 'gigs:detail' gig.id %}"><input type="submit" value="Cancel"/></form>
+
+{% endblock content %}

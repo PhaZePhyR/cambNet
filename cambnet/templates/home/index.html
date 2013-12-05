@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}CAMBnet - Home{% endblock title %}</title>
+
+{% block content %}
+	<style type="text/css">
+		section#upcoming-gigs {
+			border: solid 1px #555;			
+			float: right;
+			min-height: 100px;
+			position: relative;
+		}
+
+		ul#gig-list {
+			padding: 0 .5em;
+		}
+	</style>
+	<header class="section-title">
+		<h1>CAMBNet - Home</h1>
+	</header>
+	
+	<aside>
+		Welcome to the net portal for the California Aggie Marching Band-uh!
+	</aside>
+
+	{% if upcoming_gigs %}
+	<section id="upcoming-gigs">
+		<h4 id="upcoming-gigs-header">Upcoming Gigs</h4>
+		<ul id="gig-list">
+			{% for gig in upcoming_gigs %}
+			<li>
+				<a href="{% url 'gigs:detail' gig.id %}">
+				{{ gig.name }} - {{ gig.start_datetime|date:"SHORT_DATETIME_FORMAT" }}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</section>
+	{% endif %}
+{% endblock content %}

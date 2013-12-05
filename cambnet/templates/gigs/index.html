@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{#{% load staticfiles %}#}
+
+{% block title %}Gigs - Listed{% endblock title %}
+
+{% block content %}
+
+<header class="section-title">
+	<h1>Gigs - Listed</h1> 
+</header>
+
+{% if gigs_list %}
+<ul>
+	{% for gig in gigs_list %}
+	<li>
+		<a class="signup" href="{% url 'gigs:signup' gig.id %}">Sign Up</a>
+		<a href="{% url 'gigs:detail' gig.id %}">{{ gig.name }}</a></li>
+	{% endfor %}
+</ul>
+
+<form action="{% url 'gigs:create' %}" method="get">
+	<input type="submit" value="Create New"/>
+</form>
+{% else %}
+
+	<p> no gigs!</p>
+{% endif %}
+
+{% endblock content %}

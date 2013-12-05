@@ -1,0 +1,2 @@
+USER = 'phil'
+PASSWORD = 'lamschaps'

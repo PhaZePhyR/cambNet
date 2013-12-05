@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="{% url 'gigs:index' %}" method="get"><input type="submit" value="Back"></input></form>
+<h3>{{ gig.name }}</h3>
+<div><b>Description:</b>{{ gig.description }}</div>
+<div><b>Uniform:</b>{{ gig.get_uniform_display }}</div>
+<div><b>Start:</b>{{ gig.start_datetime|date:"SHORT_DATETIME_FORMAT" }}</div>
+{% if gig.end_datetime %}
+<div><b>End:</b>{{ gig.end_datetime|date:"SHORT_DATETIME_FORMAT" }}</div>
+{% endif %}
+
+{% if gig.extra_credit %}
+<div><b>Extra Credit</b></div>
+{% endif %}
+
+{% if gig.cars %}
+<div><b>Cars Needed</b></div>
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+	
+	<form action="{% url 'gigs:index' %}" method="get"><input type="submit" value="Back"></input></form>
+
+	<h3 class="gig-name">{{ gig.name }}</h3> <a href="{% url 'gigs:update' gig.id %}">edit</a>
+		<aside style="color:red;">{% if sign_up %}You are signed up for this gig!{% endif %}</aside>
+	<ul>	
+		<li><b>Description:</b> {{ gig.description }}</li>
+		<li><b>Uniform:</b> {{ gig.get_uniform_display }}</li>
+		<li><b>Start:</b> {{ gig.start_datetime|date:"SHORT_DATETIME_FORMAT" }}</li>
+		{% if gig.end_datetime %}
+		<li><b>End:</b> {{ gig.end_datetime|date:"SHORT_DATETIME_FORMAT" }}</li>
+		{% endif %}
+		{% if gig.extra_credit %}
+		<li><b>Extra Credit</b></li>
+		{% endif %}
+		{% if gig.cars %}
+		<li><b>Cars Needed</b></li>
+		{% endif %}
+	</ul>
+	
+	<form action="{% url 'gigs:delete' gig.id %}" method="get"><input type="submit" value="Delete"/></form>
+
+{% endblock content %}
