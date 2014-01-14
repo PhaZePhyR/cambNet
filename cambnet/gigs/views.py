@@ -6,6 +6,7 @@ from django.views.generic import edit
 
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
+from .forms import GigForm
 from .models import Gig, SignUp
 
 class IndexView(generic.ListView):
@@ -14,26 +15,12 @@ class IndexView(generic.ListView):
 
 	def get_queryset(self):
 		return Gig.objects.order_by('-start_datetime')
-
+		
 
 class DetailView(generic.DetailView):
 	model = Gig
 	template_name = 'gigs/detail.html'
 
-	def get_context_data(self, **kwargs):
-		context = super(DetailView, self).get_context_data(**kwargs)
-
-		try:
-			sign_up = SignUp.objects.get(user=self.request.user)
-		except:
-			sign_up = None
-
-		if sign_up:
-			context['sign_up'] = True
-		else:
-			context['sign_up'] = False
-
-		return context
 
 class ResultsView(generic.DetailView):
 	model = Gig
@@ -44,10 +31,13 @@ class GigCreate(LoginRequiredMixin, PermissionRequiredMixin, edit.CreateView):
 	permission_required = "gigs.add_gig"
 	raise_exception = True
 
-	model = Gig
-	fields = ['name', 'description', 'uniform', 'start_datetime', 'end_datetime', 'extra_credit', 'cars']
-	#template_name = 'gig_form.html'
+	form_class = GigForm
+	#model = Gig
+	#fields = ['name', 'description', 'uniform', 'start_datetime', 'end_datetime', 'extra_credit', 'cars']
+	template_name = 'gigs/gig_form.html'
 	success_url = reverse_lazy('gigs:index')
+
+
 
 class GigUpdate(LoginRequiredMixin, PermissionRequiredMixin, edit.UpdateView):
 	permission_required = "gigs.change_gig"
@@ -58,6 +48,7 @@ class GigUpdate(LoginRequiredMixin, PermissionRequiredMixin, edit.UpdateView):
 
 	def get_success_url(self):
 		return reverse_lazy('gigs:detail', kwargs={'pk': self.get_object().id })
+
 
 class GigDelete(LoginRequiredMixin, PermissionRequiredMixin, edit.DeleteView):
 	permission_required = "gigs.delete_gig"

@@ -4,26 +4,54 @@
 {% block title %}Gigs - Listed{% endblock title %}
 
 {% block content %}
+<script type="text/javascript">
+$(function() {
+	$("#accordion").accordion({
+		active: false,
+		collapsible: true,
+	});
+
+	$("#create-gig").button();
+});
+</script>
 
 <header class="section-title">
-	<h1>Gigs - Listed</h1> 
+	<h1>Gigs - Listed</h1>
+	<form action="{% url 'gigs:create' %}" method="get" style="display: inline; float: right;">
+		<input id="create-gig" type="submit" value="Create New"/>
+	</form>
 </header>
 
 {% if gigs_list %}
-<ul>
+<div id="accordion" style="width: 500px;">
 	{% for gig in gigs_list %}
-	<li>
-		<a class="signup" href="{% url 'gigs:signup' gig.id %}">Sign Up</a>
-		<a href="{% url 'gigs:detail' gig.id %}">{{ gig.name }}</a></li>
+	<h3>{{ gig.name }}</h3>
+	<div>
+		<ul>	
+			<aside style="color:red;">
+				{% if gig.signups %}You are signed up for this gig!
+				{% else %}<a href="{% url 'gigs:signup' gig.id %}">Sign Up</a>
+				{% endif %}
+			</aside>
+			<li><b>Description:</b> {{ gig.description }}</li>
+			<li><b>Uniform:</b> {{ gig.get_uniform_display }}</li>
+			<li><b>Start:</b> {{ gig.start_datetime|date:"SHORT_DATETIME_FORMAT" }}</li>
+			{% if gig.end_datetime %}
+			<li><b>End:</b> {{ gig.end_datetime|date:"SHORT_DATETIME_FORMAT" }}</li>
+			{% endif %}
+			{% if gig.extra_credit %}
+			<li><b>Extra Credit</b></li>
+			{% endif %}
+			{% if gig.cars %}
+			<li><b>Cars Needed</b></li>
+			{% endif %}
+		</ul>
+	</div>
 	{% endfor %}
-</ul>
+</div>
 
-<form action="{% url 'gigs:create' %}" method="get">
-	<input type="submit" value="Create New"/>
-</form>
 {% else %}
-
-	<p> no gigs!</p>
+<p> no gigs!</p>
 {% endif %}
 
 {% endblock content %}

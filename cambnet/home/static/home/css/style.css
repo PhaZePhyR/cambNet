@@ -117,3 +117,7 @@ div#login-wrapper {
 	position: relative;
 	right: 2em;
 }
+
+span.black {
+	color: #000;
+}

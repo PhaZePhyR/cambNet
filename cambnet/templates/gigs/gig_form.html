@@ -1,13 +1,66 @@
 {% extends "base.html" %}
 
 {% block content %}
+	<script type="text/javascript">
+	$(function() {
+		$("#id_start_datetime_0").datepicker();	
+		$("#id_end_datetime_0").datepicker();	
+		$(".button").button();
+	})
+	</script>
 	
-	<form action="{% url 'gigs:index' %}" method="get"><input type="submit" value="Home"/></form>
+	<style type="text/css">
+	input[type='text'] {
+		border-radius: 4px;
+		font-family: Verdana, Arial, sans-serif; 
+		height: 2em;		
+	}
+
+	textarea {
+		border-radius: 4px;	
+	}
+
+	input,
+	select, 
+	textarea {
+		display: inline-block;
+		float: left;
+	}
+
+	div.fields {
+		display: inline-block;
+		width: 80%;
+	}
+
+	label {
+		color: #555;
+		float: left;
+		font-family: Verdana, Arial, sans-serif; 
+		font-size: 1.1em;
+		text-align: right;
+		width: 20%;
+	}
+
+	form, input {
+		box-sizing: border-box;
+	}
+
+	form {
+		width: 75%;
+	} 
+	</style>
+
+	<form action="{% url 'gigs:index' %}" method="get" style="display: inline-block;">
+		<input class="button" type="submit" value="Back to Gigs"/>
+	</form>
 
 	<form action="{% url 'gigs:create' %}" method="post">
 		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Create"/>
+		{% for field in form %}
+		<div class="fields">{{ field.label_tag }} <span>{{ field }}</span></div>
+		{% endfor %}
+		<br>
+		<input class="button" type="submit" value="Create"/>
 	</form>
 
 {% endblock content %}
