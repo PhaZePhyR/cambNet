@@ -1,2 +1,2 @@
-USER = 'phil'
-PASSWORD = 'lamschaps'
+USER = 'band'
+PASSWORD = 'driver'

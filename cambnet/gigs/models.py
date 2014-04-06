@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.db import models
 
-# Create your models here.
+
 class Gig(models.Model):
 
 	# signups
@@ -29,7 +30,7 @@ class Gig(models.Model):
 		return "{0}".format(self.name)
 
 	def is_past(self):
-		return start_datetime < datetime.datetime.now()
+		return self.start_datetime < timezone.now()
 
 
 class SignUp(models.Model):

@@ -41,9 +41,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'rest_framework',
     'home',
     'gigs',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGINATE_BY': 10
+}
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,9 +71,11 @@ WSGI_APPLICATION = 'cambnet.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cambnet',
+        'NAME': 'cambnetdb',
         'USER': db.USER,
         'PASSWORD': db.PASSWORD,
+        'HOST': 'localhost',
+        'POST': ''
     }
 }
 
